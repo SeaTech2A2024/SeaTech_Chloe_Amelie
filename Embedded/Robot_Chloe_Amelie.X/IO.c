@@ -25,7 +25,11 @@ void InitIO()
     _TRISG7  = 0; // LED Bleue
     
     //****** Moteurs ************************
-
+    _TRISB14 = 0;  // Pins B14 - MOTOR1_IN1
+    _TRISB15  = 0; //Pins B15 - MOTOR1_IN2
+    _TRISC6 = 0;  // Pins RC6 - MOTOR6_IN1
+    _TRISC7  = 0; //Pins RC7 - MOTOR6_IN2
+    
     // Configuration des entrées
     
 
