@@ -8,6 +8,7 @@ float vitesseGaucheConsigne;
 float vitesseGaucheCommandeCourante;
 float vitesseDroiteConsigne;
 float vitesseDroiteCommandeCourante;
+unsigned char acceleration;
 };
 };
 } ROBOT_STATE_BITS;
