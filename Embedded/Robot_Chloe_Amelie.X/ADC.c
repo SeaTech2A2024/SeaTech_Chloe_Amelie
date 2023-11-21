@@ -53,7 +53,8 @@ AD1CON4bits.ADDMAEN = 0; // DMA is not used
 //ADC utilisés : 16(G9)-11(C11)-6(C0)
 ANSELCbits.ANSC0 = 1;
 ANSELCbits.ANSC11 = 1;
-ANSELGbits.ANSG9 = 1;
+ANSELGbits.ANSG9 = 1;   // B1 et E15 à faire
+// Ana3 passe devant / Attention numero capteurs (décalage de tt))
 
 AD1CSSLbits.CSS6=1; // Enable AN6 for scan
 AD1CSSLbits.CSS11=1; // Enable AN11 for scan
