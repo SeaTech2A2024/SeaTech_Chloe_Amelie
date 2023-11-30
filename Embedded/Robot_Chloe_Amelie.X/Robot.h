@@ -12,6 +12,8 @@ unsigned char acceleration;
 float distanceTelemetreDroit;
 float distanceTelemetreCentre;
 float distanceTelemetreGauche;
+float distanceTelemetreGauchePlus;
+float distanceTelemetreDroitPlus;
 };
 };
 } ROBOT_STATE_BITS;
