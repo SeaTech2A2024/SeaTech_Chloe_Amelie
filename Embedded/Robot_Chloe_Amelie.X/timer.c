@@ -6,7 +6,7 @@
 #include "ADC.h"
 #include "main.h"
 
-float freq = 50;
+float freq = 250;
 float freq4=1000;
 
 unsigned long timestamp;
