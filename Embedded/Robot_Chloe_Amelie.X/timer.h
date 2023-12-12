@@ -13,4 +13,6 @@ void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void);
 void SetFreqTimer4(float freq4);
 
 extern unsigned long timestamp;
+extern unsigned long timestampBloc;
+extern unsigned long timestampTourne;
 #endif /* TIMER_H */

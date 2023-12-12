@@ -8,6 +8,8 @@
 
 float freq = 250;
 float freq4=1000;
+unsigned long timestampBloc = 0;
+unsigned long timestampTourne = 0;
 
 unsigned long timestamp;
 
