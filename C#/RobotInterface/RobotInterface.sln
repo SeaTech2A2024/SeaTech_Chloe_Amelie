@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotInterface", "RobotInterface.csproj", "{E8AD86E7-B025-4938-A426-61AF1039E013}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RobotInterface", "RobotInterface.csproj", "{E8AD86E7-B025-4938-A426-61AF1039E013}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedSerialPort", "..\ExtendedSerialPort\ExtendedSerialPort.csproj", "{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtendedSerialPort", "..\ExtendedSerialPort .NET6\ExtendedSerialPort\ExtendedSerialPort\ExtendedSerialPort.csproj", "{35AF6D65-02E0-4C81-9933-599A3B2117DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +23,14 @@ Global
 		{E8AD86E7-B025-4938-A426-61AF1039E013}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E8AD86E7-B025-4938-A426-61AF1039E013}.Release|x64.ActiveCfg = Release|Any CPU
 		{E8AD86E7-B025-4938-A426-61AF1039E013}.Release|x64.Build.0 = Release|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|x64.ActiveCfg = Debug|x64
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|x64.Build.0 = Debug|x64
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|x64.ActiveCfg = Release|x64
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|x64.Build.0 = Release|x64
+		{35AF6D65-02E0-4C81-9933-599A3B2117DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35AF6D65-02E0-4C81-9933-599A3B2117DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35AF6D65-02E0-4C81-9933-599A3B2117DD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{35AF6D65-02E0-4C81-9933-599A3B2117DD}.Debug|x64.Build.0 = Debug|Any CPU
+		{35AF6D65-02E0-4C81-9933-599A3B2117DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35AF6D65-02E0-4C81-9933-599A3B2117DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35AF6D65-02E0-4C81-9933-599A3B2117DD}.Release|x64.ActiveCfg = Release|Any CPU
+		{35AF6D65-02E0-4C81-9933-599A3B2117DD}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

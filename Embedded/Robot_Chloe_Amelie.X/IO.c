@@ -40,7 +40,9 @@ void InitIO()
     __builtin_write_OSCCONL(OSCCON & ~(1<<6)); 
     
     //Assignation des remappable pins
-    
+    _U1RXR = 0b0011000; //Remappe la RP24 sur l?éntre Rx1
+    _RP36R = 0b00001; //Remappe la sortie Tx1 vers RP36
+
     //*************************************************************
     // Lock Registers
     //*************************************************************
