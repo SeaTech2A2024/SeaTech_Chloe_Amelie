@@ -55,7 +55,8 @@ namespace RobotInterface
             while (robot.byteListReceived.Count > 0)
             {
                 byte b = robot.byteListReceived.Dequeue();
-                textBoxReception.Text += "0x"+b.ToString("X2") + " ";
+                //textBoxReception.Text += b.ToString() + " ";
+                textBoxReception.Text += "0x" + b.ToString("X2") + " ";
             }
                 
         }
@@ -118,5 +119,14 @@ namespace RobotInterface
                 sendMessage();
             }
         }
+
+        byte CalculateChecksum(int msgFunction, int msgPayloadLength, byte[] msgPayload)
+        {
+            // A FINIR
+        }
+
+
+
+
     }
 }
