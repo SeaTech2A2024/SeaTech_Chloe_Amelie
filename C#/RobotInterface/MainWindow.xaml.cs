@@ -1,5 +1,8 @@
 ﻿using ExtendedSerialPort_NS;
+using System.CodeDom;
+using System.Diagnostics;
 using System.IO.Ports;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +26,7 @@ namespace RobotInterface
         DispatcherTimer timerAffichage;
         Robot robot = new Robot();
 
+        byte checksum;
        
         
 
@@ -83,6 +87,8 @@ namespace RobotInterface
             serialPort1.WriteLine(textBoxEmission.Text + "\n");
             textBoxEmission.Text = string.Empty;
         }
+
+
         private void buttonEnvoyer_Click(object sender, RoutedEventArgs e)
         {
             if (buttonEnvoyer.Background == Brushes.RoyalBlue)
@@ -103,12 +109,24 @@ namespace RobotInterface
 
         private void buttonTest_Click(object sender, RoutedEventArgs e)
         {
-            byte[] byteList = new byte[20];
-            for (int i = 0; i < byteList.Length; i++)
-            {
-                byteList[i] = (byte)(2*i);
-            }
-            serialPort1.Write(byteList,0, byteList.Length);
+            //Test1
+            //byte[] byteList = new byte[20];
+            //for (int i = 0; i < byteList.Length; i++)
+            //{
+            //    byteList[i] = (byte)(2 * i);
+            //}
+            //serialPort1.Write(byteList, 0, byteList.Length);
+
+
+            //Test2
+            //string s = "Bonjour";
+            //byte[] array = Encoding.ASCII.GetBytes(s);
+            //UartEncodeAndSendMessage(0x0080, array.Length, array);
+
+            //Test3
+
+
+
 
         }
 
@@ -122,10 +140,116 @@ namespace RobotInterface
 
         byte CalculateChecksum(int msgFunction, int msgPayloadLength, byte[] msgPayload)
         {
-            // A FINIR
+            checksum = 0;
+            checksum ^= 0xFE;
+            checksum ^=(byte)(msgFunction >> 8);
+            checksum ^= (byte)(msgFunction >> 0);
+            checksum ^= (byte)(msgPayloadLength >> 8);
+            checksum ^= (byte)(msgPayloadLength >> 0);
+            for (int i = 0; i < msgPayloadLength; i++)
+            {
+                checksum ^= msgPayload[i];
+            }
+            return checksum;
         }
 
+        void UartEncodeAndSendMessage(int msgFunction, int msgPayloadLength, byte[] msgPayload)
+        {
+            byte[] msgUart = new byte[msgPayloadLength + 6];
+            int pos = 0;
+            msgUart[pos++] = (byte)(0xFE);
+            msgUart[pos++] = (byte)(msgFunction >> 8); 
+            msgUart[pos++] = (byte)(msgFunction >> 0);
+            msgUart[pos++] = (byte)(msgPayloadLength >> 8); 
+            msgUart[pos++] = (byte)(msgPayloadLength >> 0);
+            for (int i = 0; i < msgPayloadLength ; i++)
+            {
+                msgUart[pos++] = msgPayload[i];
+            }
+            msgUart[pos++] = (byte)(CalculateChecksum( msgFunction, msgPayloadLength, msgPayload));
+            serialPort1.Write(msgUart, 0, pos);
 
+        }
+
+        public enum StateReception
+        {
+            Waiting,
+            FunctionMSB,
+            FunctionLSB,
+            PayloadLengthMSB,
+            PayloadLengthLSB,
+            Payload,
+            CheckSum
+        }
+        StateReception rcvState = StateReception.Waiting;
+        int msgDecodedFunction = 0;
+        int msgDecodedPayloadLength = 0;
+        byte[] msgDecodedPayload;
+        int msgDecodedPayloadIndex = 0;
+        private void DecodeMessage(byte c)
+        {
+            switch (rcvState)
+            {
+                case StateReception.Waiting:
+                    if(c==0xFE)
+                        rcvState = StateReception.FunctionMSB;
+                    break;
+                case StateReception.FunctionMSB:
+                    msgDecodedFunction = c << 8;
+                    rcvState = StateReception.FunctionLSB;
+                    break;
+                case StateReception.FunctionLSB:
+                    msgDecodedFunction |= c << 0;
+                    rcvState |= StateReception.PayloadLengthMSB;
+                    break;
+                case StateReception.PayloadLengthMSB:
+                    msgDecodedPayloadLength = c << 8;
+                    rcvState = StateReception.PayloadLengthLSB;
+
+                    break;
+                case StateReception.PayloadLengthLSB:
+                    msgDecodedPayloadLength |= c << 0;
+                    rcvState |= StateReception.Payload;
+
+                    if (msgDecodedPayloadLength == 0)
+                        rcvState = StateReception.CheckSum;
+                    else if (msgDecodedPayloadLength >= 256)
+                        rcvState = StateReception.Waiting;
+                    else
+                    {
+                        rcvState = StateReception.Payload;
+                        msgDecodedPayloadIndex = 0;
+                        msgDecodedPayload = new byte[msgDecodedPayloadLength];
+                    }
+                    break;
+                case StateReception.Payload:
+                    msgDecodedPayload[msgDecodedPayloadIndex] = c;
+                    msgDecodedPayloadIndex++;
+                    if (msgDecodedPayloadIndex >= msgDecodedPayloadLength)
+                        rcvState = StateReception.CheckSum;
+                    break;
+                case StateReception.CheckSum:
+                    byte receivedChecksum = c;
+                    byte calculatedChecksum = CalculateChecksum(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
+
+                    if (calculatedChecksum == receivedChecksum)
+                    {
+                        //Success, on a un message valide
+                       
+                        rcvState = StateReception.Waiting;
+                        Debug.WriteLine("Youpi !");
+                    }
+                    else
+                    {
+                        rcvState = StateReception.Waiting;
+                        Debug.WriteLine("Mince !");
+                    }
+                    break;
+                default:
+                    rcvState = StateReception.Waiting;
+                    break;
+            }
+        }
 
 
     }

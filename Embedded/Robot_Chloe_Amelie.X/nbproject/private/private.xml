@@ -13,7 +13,6 @@
             <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/IO.c</file>
             <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/Toolbox.h</file>
             <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/ADC.c</file>
-            <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/main.c</file>
             <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/IO.h</file>
             <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/timer.c</file>
             <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/ChipConfig.c</file>
@@ -21,6 +20,11 @@
             <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/main.h</file>
             <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/UART.c</file>
             <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/UART.h</file>
+            <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/main.c</file>
+            <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/CB_TX1.c</file>
+            <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/CB_TX1.h</file>
+            <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/CB_RX1.c</file>
+            <file>file:/C:/GitHub/SeaTech_Chloe_Amelie/Embedded/Robot_Chloe_Amelie.X/CB_RX1.h</file>
         </group>
     </open-files>
 </project-private>
