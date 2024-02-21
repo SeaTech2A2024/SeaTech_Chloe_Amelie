@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.Diagnostics;
 using System.IO.Ports;
+using System.Linq;
 using System.Security.RightsManagement;
 using System.Text;
 using System.Windows;
@@ -60,7 +61,8 @@ namespace RobotInterface
             {
                 byte b = robot.byteListReceived.Dequeue();
                 //textBoxReception.Text += b.ToString() + " ";
-                textBoxReception.Text += "0x" + b.ToString("X2") + " ";
+                //textBoxReception.Text += "0x" + b.ToString("X2") + " ";
+                DecodeMessage(b);
             }
                 
         }
@@ -124,9 +126,13 @@ namespace RobotInterface
             //UartEncodeAndSendMessage(0x0080, array.Length, array);
 
             //Test3
-
-
-
+            string toto = "coucou";
+            byte[] lolo = Encoding.ASCII.GetBytes(toto);
+            UartEncodeAndSendMessage((int)Commands.Texte, lolo.Length, lolo);
+            UartEncodeAndSendMessage((int)Commands.Led, 2, new byte[] { 2, 1 });
+            UartEncodeAndSendMessage((int)Commands.TelemetreIR, 3, new byte[] { 40, 30, 25});
+            UartEncodeAndSendMessage((int)Commands.Speed, 2, new byte[] { 65, 15 });
+            
 
         }
 
@@ -188,6 +194,7 @@ namespace RobotInterface
         int msgDecodedPayloadIndex = 0;
         private void DecodeMessage(byte c)
         {
+
             switch (rcvState)
             {
                 case StateReception.Waiting:
@@ -235,14 +242,15 @@ namespace RobotInterface
                     if (calculatedChecksum == receivedChecksum)
                     {
                         //Success, on a un message valide
-                       
+                        ProcessDecodedMessage(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
                         rcvState = StateReception.Waiting;
-                        Debug.WriteLine("Youpi !");
+                        Debug.WriteLine("Youpi!");
+
                     }
                     else
                     {
                         rcvState = StateReception.Waiting;
-                        Debug.WriteLine("Mince !");
+                        //Debug.WriteLine("Mince !");
                     }
                     break;
                 default:
@@ -251,6 +259,64 @@ namespace RobotInterface
             }
         }
 
+        void ProcessDecodedMessage(int msgFunction, int msgPayloadLength, byte[] msgPayload)
+        {
+            switch (msgFunction)
+            {
+                case (int)Commands.Texte:
+                    textBoxReception.Text += " ";
+                    for (int i = 0; i < msgPayloadLength; i++)
+                    {
+                        byte b = msgPayload[i];
+                        textBoxReception.Text += b.ToString("X2") + " ";
+                    }
+                    break;
 
+                case (int)Commands.Led:
+                    CheckBoxRouge.IsChecked =false;
+                    CheckBoxBleue.IsChecked = false;
+                    CheckBoxBlanche.IsChecked = false;
+
+                    switch (msgPayload[0])
+                    {
+                        case 1:
+                            CheckBoxRouge.IsChecked = (msgPayload[1] == 1);
+                            break;
+                        case 2:
+                            CheckBoxBleue.IsChecked = (msgPayload[1] == 1);
+                            break;
+                        case 3:
+                            CheckBoxBlanche.IsChecked = (msgPayload[1] == 1);
+                            break;
+                    }
+                   
+                    break;
+
+                case (int)Commands.TelemetreIR:
+                    LabelIRG.Content = msgPayload[0] + "cm";
+                    LabelIRC.Content = msgPayload[1] + "cm";
+                    LabelIRD.Content = msgPayload[2] + "cm";
+                    break;
+
+                case (int)Commands.Speed:
+                    LabelVG.Content = msgPayload[0] + "%";
+                    LabelVC.Content = msgPayload[1] + "%";
+                    break;
+                
+                default:
+                    Debug.WriteLine("OuinOuin msg non valide");
+                    break;
+
+
+            }
+        }
     }
+
+public enum Commands{
+    Texte = 0x0080,
+    Led = 0x0020, 
+    TelemetreIR = 0x0030, 
+    Speed = 0x0040
+};
+
 }

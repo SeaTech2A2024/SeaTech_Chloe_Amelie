@@ -6,7 +6,7 @@
 #include "ADC.h"
 #include "main.h"
 
-float freq = 250;
+float freq = 50;
 float freq4=1000;
 unsigned long timestampBloc = 0;
 unsigned long timestampTourne = 0;

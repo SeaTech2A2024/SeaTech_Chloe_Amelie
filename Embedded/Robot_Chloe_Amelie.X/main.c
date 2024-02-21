@@ -84,7 +84,7 @@ void OperatingSystemLoop(void) {
         case STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS:
             SetNextRobotStateInAutomaticMode();
             break;
-
+            // A RAJOUTER
         case STATE_TOURNE_PEU_GAUCHE:
             PWMSetSpeedConsigne(15, MOTEUR_DROIT); // speed a tester
             PWMSetSpeedConsigne(10, MOTEUR_GAUCHE);
