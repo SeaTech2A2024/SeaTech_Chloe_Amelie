@@ -12,7 +12,7 @@
 #include "UART.h"
 #include "CB_TX1.h"
 #include "CB_RX1.h"
-
+#include "UART_Protocol.h"
 
 unsigned char stateRobot;
 
@@ -384,6 +384,7 @@ int main(void) {
     // Boucle Principale
     /****************************************************************************************************/
     while (1) {
+
         if (ADCIsConversionFinished() == 1) {
             ADCClearConversionFinishedFlag();
             unsigned int * result = ADCGetResult();
@@ -396,7 +397,13 @@ int main(void) {
             volts = ((float) result [3])* 3.3 / 4096 * 3.2;
             robotState.distanceTelemetreGauchePlus = 34 / volts - 5;
             volts = ((float) result [0])* 3.3 / 4096 * 3.2;
-            robotState.distanceTelemetreDroitPlus = 34 / volts - 5;    
+            robotState.distanceTelemetreDroitPlus = 34 / volts - 5;   
+            
+//            unsigned char payload[] = {'B','o','n','j','o','u','r'};
+//            UartEncodeAndSendMessage(0x0080, sizeof(payload), payload);       
+            
+            unsigned char payload[] = {(unsigned char)robotState.distanceTelemetreDroit, (unsigned char)robotState.distanceTelemetreCentre, (unsigned char)robotState.distanceTelemetreGauche};
+            UartEncodeAndSendMessage(0x0030, sizeof(payload), payload);       
         }
 //        SendMessage((unsigned char*) "hi",2);
 ////        SendMessageDirect((unsigned char*) "Bonjour", 7);
@@ -406,13 +413,20 @@ int main(void) {
         for(i=0; i< CB_RX1_GetDataSize(); i++)
         {
             unsigned char c = CB_RX1_Get();
-            SendMessage(&c,1);
+            //SendMessage(&c,1);
+            UartDecodeMessage(c);
         }
-        __delay32(10000);
+                
+
+//        
+//        __delay32(40000000);
+    
     }
     //        LED_BLANCHE = !LED_BLANCHE;
     //        LED_BLEUE = !LED_BLEUE;
     //        LED_ORANGE = !LED_ORANGE;
+
+    
 
 } // fin main
 
